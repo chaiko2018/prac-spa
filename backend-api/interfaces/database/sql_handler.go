@@ -1,7 +1,7 @@
 package database
 
 type SqlHandler interface {
-  Query(string, ...interface{}) (Result, error)
+  Query(string, ...interface{}) (Row, error)
 }
 
 type Row interface {

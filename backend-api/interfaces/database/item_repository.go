@@ -1,7 +1,7 @@
 package database
 
 import(
-  "prac-spa/backend-api/domain"
+  "../../domain"
 )
 
 type ItemRepository struct {
@@ -15,7 +15,7 @@ func (repo *ItemRepository) FindById(identifier int) (item *domain.Item, err err
   }
   defer row.Close()
 
-  var id int
+  var id int64
   var name string
   var description string
   var amount int64
@@ -29,4 +29,34 @@ func (repo *ItemRepository) FindById(identifier int) (item *domain.Item, err err
   item.Amount = amount
   return
 }
+
+func (repo *ItemRepository) FindAll() (items *domain.Items, err error) {
+  rows, err := repo.Query("SELECT id, name, description, amount FROM items")
+  if err != nil {
+    return
+  }
+  defer rows.Close()
+
+  for rows.Next() {
+    var id int64
+    var name string
+    var description string
+    var amount string
+
+    if err := rows.Scan(&id, &name, &description, &amount); err != nil{
+      continue
+    }
+
+    item := &domain.Item{
+      ID:           id,
+      Name:         name,
+      Description:  description,
+      Amount:       amount,
+    }
+
+    items = append(items, item)
+  }
+  return
+}
+
 
