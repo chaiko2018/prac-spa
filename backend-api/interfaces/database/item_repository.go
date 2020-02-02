@@ -8,7 +8,7 @@ type ItemRepository struct {
   SqlHandler
 }
 
-func (repo *ItemRepository) FindById(identifier int) (item *domain.Item, err error) {
+func (repo *ItemRepository) FindById(identifier int) (item domain.Item, err error) {
   row, err := repo.Query("SELECT id, name, description, amount FROM items WHERE id = ?", identifier)
   if err != nil{
     return
@@ -30,7 +30,7 @@ func (repo *ItemRepository) FindById(identifier int) (item *domain.Item, err err
   return
 }
 
-func (repo *ItemRepository) FindAll() (items *domain.Items, err error) {
+func (repo *ItemRepository) FindAll() (items domain.Items, err error) {
   rows, err := repo.Query("SELECT id, name, description, amount FROM items")
   if err != nil {
     return
@@ -41,13 +41,13 @@ func (repo *ItemRepository) FindAll() (items *domain.Items, err error) {
     var id int64
     var name string
     var description string
-    var amount string
+    var amount int64
 
     if err := rows.Scan(&id, &name, &description, &amount); err != nil{
       continue
     }
 
-    item := &domain.Item{
+    item := domain.Item{
       ID:           id,
       Name:         name,
       Description:  description,

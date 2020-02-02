@@ -1,7 +1,7 @@
 package infrastructure
 
 import(
-  gin "gopkg.in/gin-gonic/gin.v1"
+  gin "github.com/gin-gonic/gin"
   "../interfaces/controllers"
 )
 
@@ -12,8 +12,9 @@ func init() {
 
   itemController := controllers.NewItemController(NewSqlHandler())
 
-  router.GET("/", func(c *gin.Context) { itemController.Index(c) }
-  router.GET("/", func(c *gin.Context) { itemController.Show(c) }
+  router.GET("/api/v1/items", func(c *gin.Context) { itemController.Index(c) }
+  router.GET("/api/v1/items/:id", func(c *gin.Context) { itemController.Show(c) }
 
   Router = router
 }
+

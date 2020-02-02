@@ -1,10 +1,10 @@
 package controllers
 
 import(
-  "../domain"
-  "../interfaces/database"
-  "../usecase"
+  "../../interfaces/database"
+  "../../usecase"
   "strconv"
+  "net/http"
 )
 
 type ItemController struct {
@@ -14,7 +14,7 @@ type ItemController struct {
 func NewItemController(sqlHandler database.SqlHandler) *ItemController {
   return &ItemController{
     Interactor: usecase.ItemInteractor{
-      ItemvRepository: &database.ItemRepository{
+      ItemRepository: &database.ItemRepository{
         SqlHandler: sqlHandler,
       },
     },
